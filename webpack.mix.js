@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-const glob = require('glob');
 const path = require('path');
 
 require('laravel-mix-ejs')
@@ -8,10 +7,17 @@ require('laravel-mix-polyfill');
 const appBathAssetsSrcDir = 'resources/assets/';	// resource/assetsの対象ディレクトリ
 const appBathViewsSrcDir = 'resources/views/';	// resource/viewsの対象ディレクトリ
 const appBathDistDir = 'public/';	// public先のディレクトリ
-// globパターン
-const globs = {
-	sass: glob.sync(`${appBathAssetsSrcDir}sass/**/*.scss`, {ignore: [`${appBathAssetsSrcDir}sass/**/_*.scss`]}),
-	js: glob.sync(`${appBathAssetsSrcDir}js/**/*.js`, {ignore: [`${appBathAssetsSrcDir}js/**/_*.js`]}),
+
+const sassOptions = {
+	outputStyle: 'expanded',
+	indentType: 'tab',
+	indentWidth: 1,
+	includePaths: [`${appBathAssetsSrcDir}sass/`]
+}
+const polyfillOptions = {
+	enabled: true,
+	useBuiltIns: "usage",
+	targets: {"ie": 11}
 }
 
 // EJS
@@ -32,8 +38,28 @@ const data = {
 // remove mix-manifest.json
 Mix.manifest.refresh = _ => void 0;
 
+//****************************
+// 拡張
+//****************************
 mix
+	// sass
+	.sass(`${appBathAssetsSrcDir}sass/app.scss`, 'css', { sassOptions: sassOptions })
+	// js
+	.js(`${appBathAssetsSrcDir}js/app.js`, 'js')
+	.vue()
+	.polyfill(polyfillOptions)
+	// sourceMaps
+	.sourceMaps(false, 'source-map')
+	// ejs
+	.ejs(`${appBathViewsSrcDir}**/*.ejs`, appBathDistDir, data, {
+		partials: `${appBathViewsSrcDir}components`,
+		base: 'views'
+	})
+	// images
+	.copyDirectory(`${appBathAssetsSrcDir}images`, `${appBathDistDir}images`)
+	// set public path
 	.setPublicPath('public')
+	// set options
 	.options({
 		postCss: [
 			require('css-mqpacker'),
@@ -41,84 +67,30 @@ mix
 		],
 		processCssUrls: false
 	})
+	// browserSync
 	.browserSync({
 		proxy: false,
 		port:'3000',
+		open: 'external',
 		server: {
-			baseDir: 'public'
+			baseDir: appBathDistDir
 		},
 		files: [
-			"public/**/*"
+			`${appBathDistDir}**/*`
 		],
 	})
-	.polyfill({
-		enabled: true,
-		useBuiltIns: "usage",
-		targets: {"ie": 11}
-	});
-
-//****************************
-// sass
-//****************************
-globs.sass.map( (file)=> {
-	let parse = getParseFile(file, `${appBathAssetsSrcDir}sass/`);
-	mix
-		.sass(file, `${appBathDistDir}css/${parse.dir}`,{
-			sassOptions: {
-				outputStyle: 'expanded',
-				indentType: 'tab',
-				indentWidth: 1,
-				includePaths: [`${appBathAssetsSrcDir}sass/`]
-		    }
-		})
-		.sourceMaps(false, 'source-map');
-});
-
-//****************************
-// JavaScript
-//****************************
-globs.js.map((file)=> {
-	let parse = getParseFile(file, `${appBathAssetsSrcDir}js/`);
-	mix
-		.js(file, `${appBathDistDir}js/${parse.dir}`)
-		.sourceMaps(false, 'source-map');
-});
-
-//****************************
-// ejs
-//****************************
-mix.ejs(`${appBathViewsSrcDir}**/*.ejs`, appBathDistDir, data, {
-	partials: `${appBathViewsSrcDir}components`,
-	base: 'views'
-});
-
-//****************************
-// images
-//****************************
-mix.copyDirectory(`${appBathAssetsSrcDir}images`, `${appBathDistDir}images`);
-
-//****************************
-// ソースマップ
-//****************************
-// mix.sourceMaps(false, 'source-map');
-
-
-//****************************
-// 拡張
-//****************************
-mix.webpackConfig({
-	plugins: [
-	],
-	resolve: {
-		extensions: ['.js', '.vue', '.json', '.scss'],	// 拡張子省略
-		alias: {
-			'vue$': 'vue/dist/vue.esm.js',
-			'@': `${__dirname}/resources/assets/js`,	// jsのpathエイリアス
-			'_@': `${__dirname}/resources/assets/sass`,	// sassのpathエイリアス
+	// custoom config
+	.webpackConfig({
+		plugins: [
+		],
+		resolve: {
+			extensions: ['.js', '.vue', '.json', '.scss'],	// 拡張子省略
+			alias: {
+				'@': `${__dirname}/${appBathAssetsSrcDir}js`,	// jsのpathエイリアス
+				'_@': `${__dirname}/${appBathAssetsSrcDir}sass`,	// sassのpathエイリアス
+			}
 		}
-	}
-});
-
+	});
 
 /**
  * パースしたファイル情報取得

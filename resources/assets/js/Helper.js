@@ -1,4 +1,4 @@
-class Top {
+class Helper {
 
 	test() {
 		console.log('test')
@@ -8,4 +8,4 @@ class Top {
 		console.log('top')
 	}
 }
-export default Top
+export default Helper
