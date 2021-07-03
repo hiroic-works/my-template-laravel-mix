@@ -1,0 +1,3 @@
+@function calc-percent($target_size, $container_size) {
+	@return ($target_size / $container_size) * 100%;
+}

@@ -1,0 +1,5 @@
+.top-contents {
+	@include min-screen( $breakpoint-tablet ){
+		display: flex;
+	}
+}

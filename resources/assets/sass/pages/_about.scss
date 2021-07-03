@@ -1,0 +1,6 @@
+.about-contents {
+	background: #ddd;
+	@include min-screen( $breakpoint-tablet ){
+		background: #eee;
+	}
+}

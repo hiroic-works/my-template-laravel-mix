@@ -1,0 +1,44 @@
+html {
+	height: 100%;
+	box-sizing: border-box;
+	font-size: $font-size-base + px;
+}
+
+*, *:before, *:after {
+	box-sizing: inherit;
+}
+
+a {
+	color: $link-color;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+body {
+	font-family: $font-family;
+	background: $body-bg;
+	color: $text-color-main;
+	line-height: $line-height-base;
+	height: 100%;
+	overflow-x: hidden;
+	-webkit-text-size-adjust: 100%;
+
+	@include min-screen($breakpoint-tablet){
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.potal-contents {
+	width: 100%;
+	margin: 0 auto 15.625%;
+
+	@include min-screen($breakpoint-tablet){
+		flex: 1 0 auto;
+		max-width: 950px;
+		margin-bottom: 100px;
+	}
+}
