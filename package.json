@@ -3,26 +3,27 @@
   "scripts": {
     "clean": "npx rimraf ./public",
     "dev": "npm run clean && npm run watch",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
     "build": "npm run clean && npm run prod",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.7",
-    "browser-sync-webpack-plugin": "^2.0.1",
-    "cross-env": "^7.0.2",
+    "browser-sync": "^2.27.4",
+    "browser-sync-webpack-plugin": "^2.3.0",
+    "cross-env": "^7.0.3",
     "css-mqpacker": "^7.0.0",
-    "glob": "^7.1.6",
-    "laravel-mix": "^5.0.4",
+    "glob": "^7.1.7",
+    "laravel-mix": "^6.0.25",
     "laravel-mix-ejs": "^1.1.3",
-    "laravel-mix-polyfill": "^2.0.0",
+    "laravel-mix-polyfill": "^3.0.1",
+    "postcss": "^8.3.1",
     "rimraf": "^3.0.2",
-    "sass": "^1.26.8",
-    "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "sass": "^1.35.1",
+    "sass-loader": "^12.1.0",
+    "vue-template-compiler": "^2.6.14"
   }
 }
