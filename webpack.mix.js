@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 const path = require('path');
+const dotenv = require('dotenv-webpack');
 
 require('laravel-mix-ejs')
 require('laravel-mix-polyfill');
@@ -82,6 +83,9 @@ mix
 	// custoom config
 	.webpackConfig({
 		plugins: [
+			new dotenv({
+				path: process.env.ENV_FILE
+			})
 		],
 		resolve: {
 			extensions: ['.js', '.vue', '.json', '.scss'],	// 拡張子省略

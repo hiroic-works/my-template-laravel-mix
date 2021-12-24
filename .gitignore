@@ -31,3 +31,9 @@ yarn-error.log
 
 _local/
 public/
+
+# dotenv environment variables file
+.env
+.env.production
+.env.staging
+.env.development

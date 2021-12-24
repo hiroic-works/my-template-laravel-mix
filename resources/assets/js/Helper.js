@@ -1,7 +1,7 @@
 class Helper {
 
 	test() {
-		console.log('test')
+		console.log('APP_ENV:', process.env.APP_ENV)
 	}
 
 	static log () {
