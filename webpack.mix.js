@@ -22,14 +22,20 @@ const polyfillOptions = {
 }
 
 // EJS
+// TODO: まとめ方考える
+const site_url = (isDevelopment()) ? 'https://dev.ex.com' : 'https://ex.com';
+const api_url = (isDevelopment()) ? 'https://dev.api.ex.com' : 'https://api.ex.com';
 const data = {
 	site: {
+		url: site_url,
+		api_url: api_url,
+		ogp_img: `OGP_URL`,
+		app_env: process.env.NODE_ENV,
 		fullpath: {
 			views: path.resolve(__dirname,appBathViewsSrcDir),
 			assets: path.resolve(__dirname,appBathAssetsSrcDir),
 			public: path.resolve(__dirname,appBathDistDir)
 		},
-		isDevelopment: isDevelopment(),
 		asset_cache(q = '?') {
 			return asset_cache(q)
 		}
@@ -54,7 +60,8 @@ mix
 	// ejs
 	.ejs(`${appBathViewsSrcDir}**/*.ejs`, appBathDistDir, data, {
 		partials: `${appBathViewsSrcDir}components`,
-		base: 'views'
+		base: 'views',
+		// async: false
 	})
 	// images
 	.copyDirectory(`${appBathAssetsSrcDir}images`, `${appBathDistDir}images`)

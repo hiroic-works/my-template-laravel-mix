@@ -1,3 +1,8 @@
 	<script src="/js/app.js<%= site.asset_cache(); %>"></script>
+	<% if(page.js.length > 0) { %>
+	<% for (let i = 0; i < page.js.length; i++) { %>
+	<script src="<%= page.js[i] %><%= site.asset_cache() %>"></script>
+	<% } %>
+	<% } %>
 </body>
 </html>

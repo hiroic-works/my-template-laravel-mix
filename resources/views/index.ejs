@@ -1,17 +1,28 @@
-<%- include(`${site.fullpath.views}/components/layouts/_head`) %>
+<%
+const pageData = {
+	page_url: `${site.url}`,
+	title: 'aa',
+	description: 'aa',
+	isNoindex: false,
+	css: [],
+	js: []
+}
+%>
+<%- include(`${site.fullpath.views}/components/layouts/_head`, {page: pageData}) %>
 
-	<header>
+	<header class="cmn-header">
 		header
 	</header>
 
 	<div class="top-contents">
 		<div id="app">
+			<p>site.url: <%= site.url %></p>
 			<Alert />
 		</div>
 	</div>
 
-	<footer>
+	<footer class="cmn-footer">
 		footer
 	</footer>
 
-<%- include(`${site.fullpath.views}/components/layouts/_footer`) %>
+<%- include(`${site.fullpath.views}/components/layouts/_footer`, {page: pageData}) %>

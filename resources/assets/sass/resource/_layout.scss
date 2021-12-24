@@ -32,13 +32,20 @@ body {
 	}
 }
 
-.potal-contents {
-	width: 100%;
-	margin: 0 auto 15.625%;
-
+.cmn-header {
+	padding: 4.6875%;
+	background: #000;
+	color: #fff;
 	@include min-screen($breakpoint-tablet){
-		flex: 1 0 auto;
-		max-width: 950px;
-		margin-bottom: 100px;
+		padding: 20px;
+	}
+}
+
+.cmn-footer {
+	padding: 4.6875%;
+	background: #000;
+	color: #fff;
+	@include min-screen($breakpoint-tablet){
+		padding: 20px;
 	}
 }
