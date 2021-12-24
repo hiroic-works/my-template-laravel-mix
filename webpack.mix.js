@@ -96,6 +96,26 @@ mix
 		}
 	});
 
+if (mix.inProduction()) {
+	mix.options({
+		terser: {
+			terserOptions: {
+				compress: {
+					// drop_console: true, //全てのconsoleを削除
+
+					// 特定のconsoleを削除
+					pure_funcs: [
+						'console.debug',
+						'console.log',
+						'console.dir',
+						'console.table'
+					]
+				}
+			}
+		}
+	});
+}
+
 /**
  * パースしたファイル情報取得
  *
