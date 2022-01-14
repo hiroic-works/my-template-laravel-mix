@@ -70,7 +70,6 @@ mix
 	// set options
 	.options({
 		postCss: [
-			require('css-mqpacker'),
 			require('autoprefixer')
 		],
 		processCssUrls: false
